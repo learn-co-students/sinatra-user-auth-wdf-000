@@ -19,7 +19,7 @@ class ApplicationController < Sinatra::Base
   post '/registrations' do
     @user = User.create(params[:user])
     session[:id] = @user.id
-    @user
+    # binding.pry
     redirect '/users/home'
   end
 
@@ -29,7 +29,8 @@ class ApplicationController < Sinatra::Base
   end
 
   post '/sessions' do
-    
+    @user = User.find_by(params[:user])
+    session[:id] = @user.id
     redirect '/users/home'
   end
 
@@ -39,7 +40,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/users/home' do
-   
+    @user = User.find(session[:id])
     erb :'/users/home'
   end
 
