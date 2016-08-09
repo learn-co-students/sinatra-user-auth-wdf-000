@@ -1,2 +1,12 @@
 <h1>Log In Below:</h1>
 
+<form method='post' action='/sessions'>
+  Email: <input type="email" name="email" id="email"> <br>
+  Password: <input type="text" name="password" id='password'><br>
+  <input type="submit" value="Log In">
+
+</form><!--
+
+
+Open up app/views/sessions/login.erb. We need a form that sends a POST request to /sessions and has an input field for email and password. Make your form with a submit button that says "Log In". Then, place this line: puts params, in the post '/sessions' route. Fill our the form and hit "Log In".
+Hop on over to your terminal and you should see the outputted params, looking something like this (but with whatever information you filled out into the form):
