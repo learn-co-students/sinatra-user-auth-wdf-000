@@ -1,3 +1,4 @@
+require 'pry'
 class ApplicationController < Sinatra::Base
   register Sinatra::ActiveRecordExtension
   set :views, Proc.new { File.join(root, "../views/") }
@@ -16,8 +17,12 @@ class ApplicationController < Sinatra::Base
     erb :'/registrations/signup'
   end
 
-  post '/registrations' do 
+  post '/registrations' do
+    @user = User.create(name: params[:name], email: params[:email], password: params[:password])
+    session[:id] = @user.id
+
     redirect '/users/home'
+  
   end
 
   get '/sessions/login' do
@@ -26,7 +31,9 @@ class ApplicationController < Sinatra::Base
   end
 
   post '/sessions' do
-    
+    @user = User.find_by(email: params[:email], password: params[:password])
+
+    session[:id] = @user.id
     redirect '/users/home'
   end
 
@@ -36,7 +43,8 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/users/home' do
-   
+    @user = User.find_by(id: session[:id])
+    # binding.pry
     erb :'/users/home'
   end
 
